@@ -1,2 +1,2 @@
 # scoreboard
-windows mlb scoreboard application
+Personal project, Windows MLB scoreboard application
