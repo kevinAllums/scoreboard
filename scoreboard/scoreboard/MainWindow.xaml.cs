@@ -27,6 +27,8 @@ namespace scoreboard
     {
         public MainWindow()
         {
+            this.MaxHeight = (SystemParameters.MaximizedPrimaryScreenHeight / 8) * 7;
+            this.MaxWidth = SystemParameters.PrimaryScreenWidth;
             InitializeComponent();
 
             DoStuff();
@@ -35,9 +37,7 @@ namespace scoreboard
         private async void DoStuff()
         {
             HttpClient client = new HttpClient();
-
-            string xml = "http://gd2.mlb.com/components/game/mlb/year_2017/month_07/day_14/scoreboard.xml";
-
+            string xml = CreateLink();
             HttpResponseMessage response = await client.GetAsync(xml);
 
             if (response.IsSuccessStatusCode)
@@ -46,6 +46,37 @@ namespace scoreboard
 
                 gamesStackPanel.Children.Add(game);
             }
+        }
+
+        private string CreateLink()
+        {
+            var timeUtc = DateTime.UtcNow;
+            TimeZoneInfo easternZone = TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time");
+            DateTime easternTime = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, easternZone);
+
+            string year = easternTime.Year.ToString();
+            string month = "";
+            if (easternTime.Month.ToString().Length < 2)
+            {
+                month = "0" + easternTime.Month.ToString();
+            }
+            else
+            {
+                month = easternTime.Month.ToString();
+            }
+            string day = "";
+            if (easternTime.Day.ToString().Length < 2)
+            {
+                day = "0" + easternTime.Day.ToString();
+            }
+            else
+            {
+                day = easternTime.Day.ToString();
+            }
+
+            string link = string.Format("http://gd2.mlb.com/components/game/mlb/year_{0}/month_{1}/day_{2}/scoreboard.xml", year, month, day);
+
+            return link;
         }
     }
 }
