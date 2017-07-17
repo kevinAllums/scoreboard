@@ -13,10 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using System.Net.Http;
-using System.IO;
-using System.Xml;
 using System.Xml.Linq;
+using System.Net.Http;
 
 namespace scoreboard
 {
@@ -31,10 +29,10 @@ namespace scoreboard
             this.MaxWidth = SystemParameters.PrimaryScreenWidth;
             InitializeComponent();
 
-            DoStuff();
+            GetXML();
         }
 
-        private async void DoStuff()
+        private async void GetXML()
         {
             HttpClient client = new HttpClient();
             string xml = CreateLink();
@@ -42,9 +40,11 @@ namespace scoreboard
 
             if (response.IsSuccessStatusCode)
             {
-                Game game = new Game();
-
-                gamesStackPanel.Children.Add(game);
+                
+            }
+            else
+            {
+                Console.WriteLine("Something went wrong");
             }
         }
 
