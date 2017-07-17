@@ -40,7 +40,7 @@ namespace scoreboard
 
             if (response.IsSuccessStatusCode)
             {
-                
+                CreateGames(xml);
             }
             else
             {
@@ -77,6 +77,35 @@ namespace scoreboard
             string link = string.Format("http://gd2.mlb.com/components/game/mlb/year_{0}/month_{1}/day_{2}/scoreboard.xml", year, month, day);
 
             return link;
+        }
+
+        private void CreateGames(string xml)
+        {
+            //XDocument doc = XDocument.Load("..\\..\\Games2.xml");
+            XDocument doc = XDocument.Load(xml);
+
+            int numInProgressGames = CreateInProgressGames(doc);
+            int numPreGames = CreatePreGameGames(doc);
+            int numGamesOver = CreateOverGames(doc);
+
+            Console.WriteLine("Games in Progress: " + numInProgressGames);
+            Console.WriteLine("Games in Pregame: " + numPreGames);
+            Console.WriteLine("Games Over: " + numGamesOver);
+        }
+
+        private int CreateInProgressGames(XDocument doc)
+        {
+            return 0;
+        }
+
+        private int CreatePreGameGames(XDocument doc)
+        {
+            return 0;
+        }
+
+        private int CreateOverGames(XDocument doc)
+        {
+            return 0;
         }
     }
 }
