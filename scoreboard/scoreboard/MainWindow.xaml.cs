@@ -95,7 +95,66 @@ namespace scoreboard
 
         private int CreateInProgressGames(XDocument doc)
         {
-            return 0;
+            int i = 0;
+            foreach (XElement ig_game in doc.Root.Descendants("ig_game"))
+            {
+                Game gamePanel = new Game();
+                gamePanel.AwayTeamLabel.Content = ig_game.Descendants("team").Last().Attribute("name").Value.ToString();
+                gamePanel.HomeTeamLabel.Content = ig_game.Descendants("team").First().Attribute("name").Value.ToString();
+                gamePanel.AwayTeamScoreLabel.Content = ig_game.Descendants("team").Last().Element("gameteam").Attribute("R").Value.ToString();
+                gamePanel.HomeTeamScoreLabel.Content = ig_game.Descendants("team").First().Element("gameteam").Attribute("R").Value.ToString();
+
+                if (ig_game.Element("game").Attribute("status").Value.ToString() == "DELAYED")
+                {
+                    gamePanel.GameTimeLabel.Content = ig_game.Element("game").Element("delay_reason").Value.ToString() + " Delay";
+                }
+                else if (ig_game.Element("game").Attribute("status").Value.ToString() == "PRE_GAME")
+                {
+                    gamePanel.GameTimeLabel.Content = ig_game.Element("game").Attribute("start_time").Value.ToString() + " ET" + "\nPre-Game";
+                }
+                else
+                {
+                    gamePanel.GameTimeLabel.Visibility = Visibility.Collapsed;
+                    gamePanel.GameProgressLabel.Visibility = Visibility.Visible;
+                }
+                
+                string gameProgress = "";
+
+                if (ig_game.Element("inningnum").Attribute("half").Value.ToString() == "T")
+                {
+                    gameProgress += "Top " + ig_game.Element("inningnum").Attribute("inning").Value.ToString();
+                }
+                else
+                {
+                    gameProgress += "Bottom " + ig_game.Element("inningnum").Attribute("inning").Value.ToString();
+                }
+
+                int count = ig_game.Descendants("on_base").Count();
+                if (count > 0)
+                {
+                    foreach (XElement on_base in ig_game.Descendants("on_base"))
+                    {
+                        gameProgress += string.Format("\n{0}",
+                            on_base.Attribute("base").Value.ToString());
+                    }
+                }
+                else
+                {
+                    gameProgress += "\nBases Empty";
+                }
+
+                gameProgress += "\n" + ig_game.Attribute("outs").Value.ToString() + " out";
+
+                gamePanel.GameProgressLabel.Content = gameProgress;
+
+                gamePanel.BottomLine.Content = string.Format("P: {0} | AB: {1}",
+                    ig_game.Element("pitcher").Attribute("name").Value.ToString(),
+                    ig_game.Element("batter").Attribute("name").Value.ToString());
+
+                gamesStackPanel.Children.Add(gamePanel);
+                i++;
+            }
+            return i;
         }
 
         private int CreatePreGameGames(XDocument doc)

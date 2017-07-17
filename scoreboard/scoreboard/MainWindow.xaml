@@ -7,8 +7,9 @@
         mc:Ignorable="d"
         Title="Scoreboard" Height="350" Width="525" Background="#FF211B02" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight">
     <Grid>
-        <StackPanel x:Name="gamesStackPanel" Margin="15">
-            
-        </StackPanel>
+        <ScrollViewer>
+            <StackPanel x:Name="gamesStackPanel" Margin="15">
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>
