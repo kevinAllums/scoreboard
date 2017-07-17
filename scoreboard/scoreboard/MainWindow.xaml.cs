@@ -100,7 +100,29 @@ namespace scoreboard
 
         private int CreatePreGameGames(XDocument doc)
         {
-            return 0;
+            int i = 0;
+            foreach (XElement sg_game in doc.Root.Descendants("sg_game"))
+            {
+                Game gamePanel = new Game();
+                gamePanel.AwayTeamLabel.Content = sg_game.Descendants("team").Last().Attribute("name").Value.ToString();
+                gamePanel.HomeTeamLabel.Content = sg_game.Descendants("team").First().Attribute("name").Value.ToString();
+                gamePanel.AwayTeamScoreLabel.Visibility = Visibility.Hidden;
+                gamePanel.HomeTeamScoreLabel.Visibility = Visibility.Hidden;
+                gamePanel.GameTimeLabel.Content = sg_game.Element("game").Attribute("start_time").Value.ToString() + " ET";
+                gamePanel.BottomLine.Content = string.Format("{0} ({1}-{2} {3})  {4} ({5}-{6} {7})",
+                    sg_game.Descendants("p_pitcher").Last().Element("pitcher").Attribute("name").Value.ToString(),
+                    sg_game.Descendants("p_pitcher").Last().Attribute("wins").Value.ToString(),
+                    sg_game.Descendants("p_pitcher").Last().Attribute("losses").Value.ToString(),
+                    sg_game.Descendants("p_pitcher").Last().Attribute("era").Value.ToString(),
+                    sg_game.Descendants("p_pitcher").First().Element("pitcher").Attribute("name").Value.ToString(),
+                    sg_game.Descendants("p_pitcher").First().Attribute("wins").Value.ToString(),
+                    sg_game.Descendants("p_pitcher").First().Attribute("losses").Value.ToString(),
+                    sg_game.Descendants("p_pitcher").First().Attribute("era").Value.ToString());
+
+                gamesStackPanel.Children.Add(gamePanel);
+                i++;
+            }
+            return i;
         }
 
         private int CreateOverGames(XDocument doc)
