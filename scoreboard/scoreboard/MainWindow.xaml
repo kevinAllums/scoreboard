@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:scoreboard"
         mc:Ignorable="d"
-        Title="Scoreboard" Height="350" Width="525">
+        Title="Scoreboard" Height="350" Width="525" Background="#FF211B02" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight">
     <Grid>
-        
+        <StackPanel x:Name="gamesStackPanel" Margin="15">
+            
+        </StackPanel>
     </Grid>
 </Window>
