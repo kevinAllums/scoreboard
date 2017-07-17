@@ -127,7 +127,40 @@ namespace scoreboard
 
         private int CreateOverGames(XDocument doc)
         {
-            return 0;
+            int i = 0;
+            foreach (XElement go_game in doc.Root.Descendants("go_game"))
+            {
+                Game gamePanel = new Game();
+                gamePanel.AwayTeamLabel.Content = go_game.Descendants("team").Last().Attribute("name").Value.ToString();
+                gamePanel.HomeTeamLabel.Content = go_game.Descendants("team").First().Attribute("name").Value.ToString();
+                gamePanel.AwayTeamScoreLabel.Content = go_game.Descendants("team").Last().Element("gameteam").Attribute("R").Value.ToString();
+                gamePanel.HomeTeamScoreLabel.Content = go_game.Descendants("team").First().Element("gameteam").Attribute("R").Value.ToString();
+                gamePanel.GameTimeLabel.Visibility = Visibility.Collapsed;
+                gamePanel.GameOverLabel.Visibility = Visibility.Visible;
+
+                string bottomText = "";
+                bottomText = string.Format("W: {0} ({1}-{2})\nL: {3} ({4}-{5})",
+                    go_game.Element("w_pitcher").Element("pitcher").Attribute("name").Value.ToString(),
+                    go_game.Element("w_pitcher").Attribute("wins").Value.ToString(),
+                    go_game.Element("w_pitcher").Attribute("losses").Value.ToString(),
+                    go_game.Element("l_pitcher").Element("pitcher").Attribute("name").Value.ToString(),
+                    go_game.Element("l_pitcher").Attribute("wins").Value.ToString(),
+                    go_game.Element("l_pitcher").Attribute("losses").Value.ToString());
+
+                int saves = Convert.ToInt32(go_game.Element("sv_pitcher").Attribute("saves").Value);
+                Console.WriteLine(saves.ToString());
+                if (saves > 0)
+                {
+                    bottomText += string.Format("\nS: {0} ({1})",
+                        go_game.Element("sv_pitcher").Element("pitcher").Attribute("name").Value.ToString(),
+                        saves.ToString());
+                }
+                gamePanel.BottomLine.Content = bottomText;
+
+                gamesStackPanel.Children.Add(gamePanel);
+                i++;
+            }
+            return i;
         }
     }
 }
