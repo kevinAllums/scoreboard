@@ -6,37 +6,84 @@
              xmlns:local="clr-namespace:scoreboard"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Margin="10">
-        <StackPanel x:Name="GamesStackPanel" Background="#FF043604">
-            <DockPanel x:Name="GameInfo">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition MinWidth="175"/>
-                        <ColumnDefinition MinWidth="100"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="75"/>
-                    </Grid.RowDefinitions>
-
-                    <DockPanel Grid.Column="0">
-                        <StackPanel DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Center">
-                            <Label x:Name="AwayTeamLabel" Content="AwayTeam" Background="{x:Null}" FontFamily="Yu Gothic UI Semibold" FontSize="16" Foreground="White" Width="150" HorizontalAlignment="Left"/>
-                            <Label x:Name="HomeTeamLabel" Content="HomeTeam" Background="{x:Null}" FontFamily="Yu Gothic UI Semibold" FontSize="16" Foreground="White" Width="150" HorizontalAlignment="Left"/>
-                        </StackPanel>
-                        <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center" HorizontalAlignment="Right">
-                            <Label x:Name="AwayTeamScoreLabel" Content="0" Background="{x:Null}" FontFamily="Yu Gothic UI Semibold" FontSize="16" Foreground="White" Width="25" HorizontalAlignment="Right" HorizontalContentAlignment="Center"/>
-                            <Label x:Name="HomeTeamScoreLabel" Content="0" Background="{x:Null}" FontFamily="Yu Gothic UI Semibold" FontSize="16" Foreground="White" Width="25" HorizontalAlignment="Left" HorizontalContentAlignment="Center"/>
-                        </StackPanel>
-                    </DockPanel>
-                    <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
-                        <Label x:Name="GameTimeLabel" Visibility="Visible" Content="GameTime" FontFamily="Yu Gothic UI Semibold" FontSize="16" Foreground="White" Background="{x:Null}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
-                        <Label x:Name="GameOverLabel" Visibility="Collapsed" Content="Final" FontFamily="Yu Gothic UI Semibold" FontSize="16" Foreground="White" Background="{x:Null}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
-                        <Label x:Name="GameProgressLabel" Visibility="Collapsed" FontFamily="Yu Gothic UI Semibold" FontSize="12" Foreground="White" Background="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+    <Grid Margin="15" Width="270">
+        <StackPanel x:Name="GamesStackPanel" Width="270" Background="#FF043604">
+            <Border BorderThickness="1" BorderBrush="White">
+                <DockPanel x:Name="GameInfo">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition MinWidth="175"/>
+                            <ColumnDefinition MinWidth="100"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="100"/>
+                        </Grid.RowDefinitions>
+                        <DockPanel Grid.Column="0">
+                            <StackPanel DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <Label x:Name="AwayTeamLabel" Content="AwayTeam" Background="{x:Null}" FontFamily="Yu Gothic UI Semibold" FontSize="18" Foreground="White" Width="150" HorizontalAlignment="Left" Padding="5,5,5,0"/>
+                                <Label x:Name="AwayTeamRecordLabel" Content="(##-##)" Background="{x:Null}" FontFamily="Yu Gothic UI" FontSize="12" Foreground="White" Width="150" HorizontalAlignment="Left" Padding="10,0,0,0"/>
+                                <Label x:Name="HomeTeamLabel" Content="HomeTeam" Background="{x:Null}" FontFamily="Yu Gothic UI Semibold" FontSize="18" Foreground="White" Width="150" HorizontalAlignment="Left" Padding="5,5,5,0"/>
+                                <Label x:Name="HomeTeamRecordLabel" Content="(##-##)" Background="{x:Null}" FontFamily="Yu Gothic UI" FontSize="12" Foreground="White" Width="150" HorizontalAlignment="Left" Padding="10,0,0,0"/>
+                            </StackPanel>
+                            <StackPanel x:Name="ScorePanel" DockPanel.Dock="Right" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,14" Width="35">
+                                <Label x:Name="AwayTeamScoreLabel" Content="##" Background="{x:Null}" FontFamily="Yu Gothic UI Semibold" FontSize="18" Foreground="White" HorizontalAlignment="Right" HorizontalContentAlignment="Center" VerticalAlignment="Top" Padding="5,5,5,10"/>
+                                <Label x:Name="HomeTeamScoreLabel" Content="##" Background="{x:Null}" FontFamily="Yu Gothic UI Semibold" FontSize="18" Foreground="White" HorizontalAlignment="Right" HorizontalContentAlignment="Center" VerticalAlignment="Top"/>
+                            </StackPanel>
+                        </DockPanel>
+                        <Border Grid.Column="1" BorderThickness="1" BorderBrush="White">
+                            <DockPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100">
+                                <Label x:Name="PreOrPostGameLabel" Visibility="Collapsed" Content="GameTime" FontFamily="Yu Gothic UI Semibold" FontSize="16" Foreground="White" Background="{x:Null}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
+                                <StackPanel x:Name="GameInProgressPanel" Visibility="Collapsed">
+                                    <Label x:Name="inningLabel" Content="Bottom 1"  FontFamily="Yu Gothic UI Semibold" FontSize="12" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Canvas x:Name="Bases" Visibility="Visible" Height="49" Width="104" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                        <Rectangle x:Name="FirstBase" Fill="{x:Null}" HorizontalAlignment="Left" Height="20" Stroke="White" VerticalAlignment="Top" Width="20" RenderTransformOrigin="0.5,0.5" Canvas.Left="57" Canvas.Top="21" >
+                                            <Rectangle.RenderTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform/>
+                                                    <SkewTransform/>
+                                                    <RotateTransform Angle="45"/>
+                                                    <TranslateTransform/>
+                                                </TransformGroup>
+                                            </Rectangle.RenderTransform>
+                                        </Rectangle>
+                                        <Rectangle x:Name="SecondBase" Fill="{x:Null}" HorizontalAlignment="Left" Height="20" Stroke="White" VerticalAlignment="Top" Width="20" RenderTransformOrigin="0.5,0.5" Canvas.Left="42" Canvas.Top="6">
+                                            <Rectangle.RenderTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform/>
+                                                    <SkewTransform/>
+                                                    <RotateTransform Angle="45"/>
+                                                    <TranslateTransform/>
+                                                </TransformGroup>
+                                            </Rectangle.RenderTransform>
+                                        </Rectangle>
+                                        <Rectangle x:Name="ThirdBase" Fill="{x:Null}" HorizontalAlignment="Center" Height="20" Stroke="White" VerticalAlignment="Center" Width="20" RenderTransformOrigin="0.5,0.5" Canvas.Left="27" Canvas.Top="21">
+                                            <Rectangle.RenderTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform/>
+                                                    <SkewTransform/>
+                                                    <RotateTransform Angle="45"/>
+                                                    <TranslateTransform/>
+                                                </TransformGroup>
+                                            </Rectangle.RenderTransform>
+                                        </Rectangle>
+                                    </Canvas>
+                                    <Label x:Name="CountAndOutsLabel" Content="3-2, 2 outs" FontFamily="Yu Gothic UI Semibold" FontSize="12" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DockPanel>
+                        </Border>
+                    </Grid>
+                </DockPanel>
+            </Border>
+            <Border BorderThickness="1" BorderBrush="White">
+                <DockPanel LastChildFill="False">
+                    <StackPanel DockPanel.Dock="Left" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto">
+                        <Label x:Name="FirstRowLabel" Content="FirstRowLabel" FontFamily="Yu Gothic UI" FontSize="12" Foreground="White" Background="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="5,0,5,3" Margin="0,3,0,0"/>
+                        <Label x:Name="SecondRowLabel" Content="SecondRowLabel" FontFamily="Yu Gothic UI" FontSize="12" Foreground="White" Background="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="5,0,5,3"/>
+                        <Label x:Name="ThirdRowLabel" Content="ThirdRowLabel" FontFamily="Yu Gothic UI" FontSize="12" Foreground="White" Background="{x:Null}" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="5,0,5,3"/>
                     </StackPanel>
-
-                </Grid>
-            </DockPanel>
-            <Label x:Name="BottomLine" Content="Filler" FontFamily="Yu Gothic UI Semibold" FontSize="12" Foreground="White" Background="{x:Null}" Padding="10,5,5,5"/>
+                    <Button x:Name="DetailsButton" DockPanel.Dock="Right" Content="Details" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="DetailsButton_Click"/>
+                </DockPanel>
+            </Border>
         </StackPanel>
     </Grid>
 </UserControl>

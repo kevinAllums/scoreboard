@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:scoreboard"
         mc:Ignorable="d"
-        Title="Scoreboard" Height="350" Width="525" Background="#FF211B02" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight">
+        Title="MLB Scoreboard" Icon="b2.ico" Background="#FF362B04" FontFamily="Yu Gothic UI Semibold" FontSize="16" SizeToContent="WidthAndHeight" ScrollViewer.VerticalScrollBarVisibility="Auto" MinWidth="340" MinHeight="230">
     <Grid>
-        <ScrollViewer>
-            <StackPanel x:Name="gamesStackPanel" Margin="15">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="GamesPanel">
             </StackPanel>
         </ScrollViewer>
     </Grid>
