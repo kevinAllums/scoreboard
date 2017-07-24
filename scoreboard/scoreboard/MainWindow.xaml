@@ -8,8 +8,8 @@
         Title="MLB Scoreboard" Icon="b2.ico" Background="#FF362B04" FontFamily="Yu Gothic UI Semibold" FontSize="16" SizeToContent="WidthAndHeight" ScrollViewer.VerticalScrollBarVisibility="Auto" MinWidth="340" MinHeight="230">
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel x:Name="GamesPanel">
-            </StackPanel>
+            <WrapPanel x:Name="GamesPanel">
+            </WrapPanel>
         </ScrollViewer>
     </Grid>
 </Window>

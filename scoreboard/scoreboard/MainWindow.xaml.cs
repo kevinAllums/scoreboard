@@ -26,11 +26,20 @@ namespace scoreboard
         {
             this.MaxHeight = (SystemParameters.MaximizedPrimaryScreenHeight / 8) * 7;
             this.MaxWidth = SystemParameters.PrimaryScreenWidth;
+            this.MinWidth = 290 + SystemParameters.VerticalScrollBarWidth;
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
 
             FillGamesPanel();
         }
-        
+
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            GamesPanel.Children.Clear();
+            Console.WriteLine(DateTime.Now.ToString("h:mm:ss tt"));
+            FillGamesPanel();
+        }
+
         private string CreateLink()
         {
             DateTime utcMinus10 = DateTime.UtcNow.AddHours(-10);
