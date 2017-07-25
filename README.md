@@ -9,3 +9,9 @@ Main Window
 
 Main Window
 ![Main Window](http://imgur.com/MGn6MUv.jpg)
+
+Details - Linescore
+![Main Window](http://imgur.com/Xmsq6Nr.jpg)
+
+Details - Pregame matchup
+![Main Window](http://imgur.com/ViG928x.jpg)
