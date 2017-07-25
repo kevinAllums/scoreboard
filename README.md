@@ -6,3 +6,6 @@ Shows all games that are taking place or have taken place on the current day.  E
 ## Images
 Main Window
 ![Main Window](http://imgur.com/xgsiyAz.jpg)
+
+Main Window
+![Main Window](http://imgur.com/MGn6MUv.jpg)
