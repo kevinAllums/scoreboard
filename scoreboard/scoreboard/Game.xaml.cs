@@ -48,6 +48,7 @@ namespace scoreboard
             {
                 CreatePostGame();
             }
+            // delayed games
             else
             {
                 CreateDelayedGame();
@@ -56,39 +57,28 @@ namespace scoreboard
 
         private void CreateGameInProgress()
         {
-            AwayTeamLabel.Content = game.Attribute("away_team_name").Value.ToString();
-            string awayRecord = string.Format("({0}-{1})",
-                game.Attribute("away_win").Value.ToString(),
-                game.Attribute("away_loss").Value.ToString());
-            AwayTeamRecordLabel.Content = awayRecord;
-
-            HomeTeamLabel.Content = game.Attribute("home_team_name").Value.ToString();
-            string homeRecord = string.Format("({0}-{1})",
-                game.Attribute("home_win").Value.ToString(),
-                game.Attribute("home_loss").Value.ToString());
-            HomeTeamRecordLabel.Content = homeRecord;
-
+            SetNamesAndRecords();
+            //score
             AwayTeamScoreLabel.Content = game.Element("linescore").Element("r").Attribute("away").Value.ToString();
             HomeTeamScoreLabel.Content = game.Element("linescore").Element("r").Attribute("home").Value.ToString();
-
+            // game information
             GameInProgressPanel.Visibility = Visibility.Visible;
+            // inning & half
             inningLabel.Content = string.Format("{0} {1}",
                 game.Element("status").Attribute("inning_state").Value.ToString(),
                 game.Element("status").Attribute("inning").Value.ToString());
-
+            // count and outs
             CountAndOutsLabel.Content = string.Format("{0}-{1}, {2} out",
                 game.Element("status").Attribute("b").Value.ToString(),
                 game.Element("status").Attribute("s").Value.ToString(),
                 game.Element("status").Attribute("o").Value.ToString());
-
             // base runners
             int base_runner_status = Convert.ToInt32(game.Element("runners_on_base").Attribute("status").Value);
-
             SolidColorBrush brush = new SolidColorBrush(System.Windows.Media.Colors.Orange);
 
             if (base_runner_status == 0)
             {
-                // 0
+                // No one on base
             }
             else if (base_runner_status == 1) // correct
             {
@@ -105,7 +95,7 @@ namespace scoreboard
                 // 3rd
                 ThirdBase.Fill = brush;
             }
-            else if (base_runner_status == 4)
+            else if (base_runner_status == 4) // correct
             {
                 // 1st/2nd
                 FirstBase.Fill = brush;
@@ -123,7 +113,7 @@ namespace scoreboard
                 SecondBase.Fill = brush;
                 ThirdBase.Fill = brush;
             }
-            else if (base_runner_status == 7)
+            else if (base_runner_status == 7) // correct
             {
                 // 2nd/3rd
                 FirstBase.Fill = brush;
@@ -137,13 +127,13 @@ namespace scoreboard
                 SecondBase.Fill = brush;
                 ThirdBase.Fill = brush;
             }
-
+            // current pitcher
             FirstRowLabel.Content = string.Format("P: {0} ({1}-{2}, {3})",
                 game.Element("pitcher").Attribute("name_display_roster").Value.ToString(),
                 game.Element("pitcher").Attribute("wins").Value.ToString(),
                 game.Element("pitcher").Attribute("losses").Value.ToString(),
                 game.Element("pitcher").Attribute("era").Value.ToString());
-
+            // current batter
             SecondRowLabel.Content = string.Format("AB: {0} ({1}-{2}, {3})",
                 game.Element("batter").Attribute("name_display_roster").Value.ToString(),
                 game.Element("batter").Attribute("h").Value.ToString(),
@@ -155,21 +145,12 @@ namespace scoreboard
 
         private void CreatePreGame()
         {
+            // make scores hidden
             AwayTeamScoreLabel.Visibility = Visibility.Hidden;
             HomeTeamScoreLabel.Visibility = Visibility.Hidden;
 
-            AwayTeamLabel.Content = game.Attribute("away_team_name").Value.ToString();
-            string awayRecord = string.Format("({0}-{1})",
-                game.Attribute("away_win").Value.ToString(),
-                game.Attribute("away_loss").Value.ToString());
-            AwayTeamRecordLabel.Content = awayRecord;
-
-            HomeTeamLabel.Content = game.Attribute("home_team_name").Value.ToString();
-            string homeRecord = string.Format("({0}-{1})",
-                game.Attribute("home_win").Value.ToString(),
-                game.Attribute("home_loss").Value.ToString());
-            HomeTeamRecordLabel.Content = homeRecord;
-
+            SetNamesAndRecords();
+            // game information
             if (game.Element("status").Attribute("status").Value == "Preview" || game.Element("status").Attribute("status").Value == "Pre-Game")
             {
                 PreOrPostGameLabel.Content = string.Format("{0}{1} {2}",
@@ -192,44 +173,34 @@ namespace scoreboard
             {
                 PreOrPostGameLabel.Visibility = Visibility.Collapsed;
             }
-
+            // away probable pitcher
             FirstRowLabel.Content = string.Format("{0}: {1} ({2}-{3}, {4})",
                 game.Attribute("away_name_abbrev").Value.ToString(),
                 game.Element("away_probable_pitcher").Attribute("name_display_roster").Value.ToString(),
                 game.Element("away_probable_pitcher").Attribute("wins").Value.ToString(),
                 game.Element("away_probable_pitcher").Attribute("losses").Value.ToString(),
                 game.Element("away_probable_pitcher").Attribute("era").Value.ToString());
-
+            // home probable pitcher
             SecondRowLabel.Content = string.Format("{0}: {1} ({2}-{3}, {4})",
                 game.Attribute("home_name_abbrev").Value.ToString(),
                 game.Element("home_probable_pitcher").Attribute("name_display_roster").Value.ToString(),
                 game.Element("home_probable_pitcher").Attribute("wins").Value.ToString(),
                 game.Element("home_probable_pitcher").Attribute("losses").Value.ToString(),
                 game.Element("home_probable_pitcher").Attribute("era").Value.ToString());
-
-            string bottomLine = string.Format("{0}: {1} ({2}-{3}, {4})\n{5}: {6} ({7}-{8}, {9})",
-                game.Attribute("away_name_abbrev").Value.ToString(),
-                game.Element("away_probable_pitcher").Attribute("name_display_roster").Value.ToString(),
-                game.Element("away_probable_pitcher").Attribute("wins").Value.ToString(),
-                game.Element("away_probable_pitcher").Attribute("losses").Value.ToString(),
-                game.Element("away_probable_pitcher").Attribute("era").Value.ToString(),
-                game.Attribute("home_name_abbrev").Value.ToString(),
-                game.Element("home_probable_pitcher").Attribute("name_display_roster").Value.ToString(),
-                game.Element("home_probable_pitcher").Attribute("wins").Value.ToString(),
-                game.Element("home_probable_pitcher").Attribute("losses").Value.ToString(),
-                game.Element("home_probable_pitcher").Attribute("era").Value.ToString());
-
+            
             ThirdRowLabel.Content = "";
         }
 
         private void CreateDelayedGame()
         {
+            // if game delayed while in progress
             if (game.Element("linescore").Element("inning").Attribute("away") != null)
             {
                 CreateGameInProgress();
                 ThirdRowLabel.Content = game.Element("status").Attribute("reason").Value.ToUpper();
                 ThirdRowLabel.Content += " " + game.Element("status").Attribute("status").Value.ToUpper();
             }
+            // if game is delayed before game start
             else
             {
                 CreatePreGame();
@@ -240,18 +211,7 @@ namespace scoreboard
 
         private void CreatePostGame()
         {
-            // away team name and record
-            AwayTeamLabel.Content = game.Attribute("away_team_name").Value.ToString();
-            string awayRecord = string.Format("({0}-{1})",
-                game.Attribute("away_win").Value.ToString(),
-                game.Attribute("away_loss").Value.ToString());
-            AwayTeamRecordLabel.Content = awayRecord;
-            // home team name and record
-            HomeTeamLabel.Content = game.Attribute("home_team_name").Value.ToString();
-            string homeRecord = string.Format("({0}-{1})",
-                game.Attribute("home_win").Value.ToString(),
-                game.Attribute("home_loss").Value.ToString());
-            HomeTeamRecordLabel.Content = homeRecord;
+            SetNamesAndRecords();
             // score
             AwayTeamScoreLabel.Content = game.Element("linescore").Element("r").Attribute("away").Value.ToString();
             HomeTeamScoreLabel.Content = game.Element("linescore").Element("r").Attribute("home").Value.ToString();
@@ -282,6 +242,22 @@ namespace scoreboard
             {
                 ThirdRowLabel.Content = "";
             }
+        }
+
+        private void SetNamesAndRecords()
+        {
+            // away team name and record
+            AwayTeamLabel.Content = game.Attribute("away_team_name").Value.ToString();
+            string awayRecord = string.Format("({0}-{1})",
+                game.Attribute("away_win").Value.ToString(),
+                game.Attribute("away_loss").Value.ToString());
+            AwayTeamRecordLabel.Content = awayRecord;
+            // home team name and record
+            HomeTeamLabel.Content = game.Attribute("home_team_name").Value.ToString();
+            string homeRecord = string.Format("({0}-{1})",
+                game.Attribute("home_win").Value.ToString(),
+                game.Attribute("home_loss").Value.ToString());
+            HomeTeamRecordLabel.Content = homeRecord;
         }
 
         private void DetailsButton_Click(object sender, RoutedEventArgs e)
