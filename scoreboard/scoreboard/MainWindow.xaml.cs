@@ -85,6 +85,15 @@ namespace scoreboard
                 GamesPanel.Children.Add(gamePanel);
             }
 
+            // handle delayed games
+            foreach (XElement game in master_scoreboard.Root.Descendants("game").
+                Where(node => node.Element("status").Attribute("status").Value == "Delayed"))
+            {
+                Game gamePanel = new Game(game);
+
+                GamesPanel.Children.Add(gamePanel);
+            }
+
             // Handle all PreGame games
             foreach (XElement game in master_scoreboard.Root.Descendants("game").
                 Where(node => node.Element("status").Attribute("status").Value == "Preview" ||

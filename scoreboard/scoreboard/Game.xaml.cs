@@ -44,9 +44,13 @@ namespace scoreboard
                 CreatePreGame();
             }
             // post games
-            else
+            else if (gameStatus == "Game Over" || gameStatus == "Final")
             {
                 CreatePostGame();
+            }
+            else
+            {
+                CreateDelayedGame();
             }
         }
 
@@ -216,6 +220,22 @@ namespace scoreboard
                 game.Element("home_probable_pitcher").Attribute("era").Value.ToString());
 
             ThirdRowLabel.Content = "";
+        }
+
+        private void CreateDelayedGame()
+        {
+            if (game.Element("linescore").Element("inning").Attribute("away") != null)
+            {
+                CreateGameInProgress();
+                ThirdRowLabel.Content = game.Element("status").Attribute("reason").Value.ToUpper();
+                ThirdRowLabel.Content += " " + game.Element("status").Attribute("status").Value.ToUpper();
+            }
+            else
+            {
+                CreatePreGame();
+                PreOrPostGameLabel.Content += game.Element("status").Attribute("reason").Value.ToUpper();
+                PreOrPostGameLabel.Content += " " + game.Element("status").Attribute("status").Value.ToUpper();
+            }
         }
 
         private void CreatePostGame()

@@ -53,6 +53,17 @@ namespace scoreboard
                 CreateLinescore();
                 // eventually want to include boxscore
             }
+            else if (status == "Delayed")
+            {
+                if (game.Element("linescore").Element("inning").Attribute("away") == null)
+                {
+                    CreatePreGameMatchup();
+                }
+                else
+                {
+                    CreateLinescore();
+                }
+            }
         }
 
         private void CreatePreGameMatchup()
