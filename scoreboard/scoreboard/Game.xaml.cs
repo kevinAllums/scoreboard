@@ -59,8 +59,7 @@ namespace scoreboard
         {
             SetNamesAndRecords();
             //score
-            AwayTeamScoreLabel.Content = game.Element("linescore").Element("r").Attribute("away").Value.ToString();
-            HomeTeamScoreLabel.Content = game.Element("linescore").Element("r").Attribute("home").Value.ToString();
+            SetScore();
             // game information
             GameInProgressPanel.Visibility = Visibility.Visible;
             // inning & half
@@ -145,11 +144,8 @@ namespace scoreboard
 
         private void CreatePreGame()
         {
-            // make scores hidden
-            AwayTeamScoreLabel.Visibility = Visibility.Hidden;
-            HomeTeamScoreLabel.Visibility = Visibility.Hidden;
-
             SetNamesAndRecords();
+            SetScore();
             // game information
             if (game.Element("status").Attribute("status").Value == "Preview" || game.Element("status").Attribute("status").Value == "Pre-Game")
             {
@@ -213,8 +209,7 @@ namespace scoreboard
         {
             SetNamesAndRecords();
             // score
-            AwayTeamScoreLabel.Content = game.Element("linescore").Element("r").Attribute("away").Value.ToString();
-            HomeTeamScoreLabel.Content = game.Element("linescore").Element("r").Attribute("home").Value.ToString();
+            SetScore();
             // game state
             PreOrPostGameLabel.Content = "Final";
             PreOrPostGameLabel.Visibility = Visibility.Visible;
@@ -258,6 +253,21 @@ namespace scoreboard
                 game.Attribute("home_win").Value.ToString(),
                 game.Attribute("home_loss").Value.ToString());
             HomeTeamRecordLabel.Content = homeRecord;
+        }
+
+        private void SetScore()
+        {
+            string status = game.Element("status").Attribute("status").Value;
+            if (status == "Preview" || status == "Pre-Game" || status == "Warmup")
+            {
+                AwayTeamScoreLabel.Visibility = Visibility.Hidden;
+                HomeTeamScoreLabel.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                AwayTeamScoreLabel.Content = game.Element("linescore").Element("r").Attribute("away").Value.ToString();
+                HomeTeamScoreLabel.Content = game.Element("linescore").Element("r").Attribute("home").Value.ToString();
+            }
         }
 
         private void DetailsButton_Click(object sender, RoutedEventArgs e)
