@@ -1,18 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
 using System.Xml.Linq;
 
 namespace scoreboard
@@ -187,24 +176,6 @@ namespace scoreboard
             ThirdRowLabel.Content = "";
         }
 
-        private void CreateDelayedGame()
-        {
-            // if game delayed while in progress
-            if (game.Element("linescore").Element("inning").Attribute("away") != null)
-            {
-                CreateGameInProgress();
-                ThirdRowLabel.Content = game.Element("status").Attribute("reason").Value.ToUpper();
-                ThirdRowLabel.Content += " " + game.Element("status").Attribute("status").Value.ToUpper();
-            }
-            // if game is delayed before game start
-            else
-            {
-                CreatePreGame();
-                PreOrPostGameLabel.Content += game.Element("status").Attribute("reason").Value.ToUpper();
-                PreOrPostGameLabel.Content += " " + game.Element("status").Attribute("status").Value.ToUpper();
-            }
-        }
-
         private void CreatePostGame()
         {
             SetNamesAndRecords();
@@ -239,6 +210,24 @@ namespace scoreboard
             }
         }
 
+        private void CreateDelayedGame()
+        {
+            // if game delayed while in progress
+            if (game.Element("linescore").Element("inning").Attribute("away") != null)
+            {
+                CreateGameInProgress();
+                ThirdRowLabel.Content = game.Element("status").Attribute("reason").Value.ToUpper();
+                ThirdRowLabel.Content += " " + game.Element("status").Attribute("status").Value.ToUpper();
+            }
+            // if game is delayed before game start
+            else
+            {
+                CreatePreGame();
+                PreOrPostGameLabel.Content += game.Element("status").Attribute("reason").Value.ToUpper();
+                PreOrPostGameLabel.Content += " " + game.Element("status").Attribute("status").Value.ToUpper();
+            }
+        }
+
         private void SetNamesAndRecords()
         {
             // away team name and record
@@ -247,6 +236,7 @@ namespace scoreboard
                 game.Attribute("away_win").Value.ToString(),
                 game.Attribute("away_loss").Value.ToString());
             AwayTeamRecordLabel.Content = awayRecord;
+
             // home team name and record
             HomeTeamLabel.Content = game.Attribute("home_team_name").Value.ToString();
             string homeRecord = string.Format("({0}-{1})",
@@ -272,7 +262,6 @@ namespace scoreboard
 
         private void DetailsButton_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Create & show details for - " + AwayTeamLabel.Content.ToString());
             Details gameDetails = new Details(game);
             gameDetails.ShowDialog();
         }
