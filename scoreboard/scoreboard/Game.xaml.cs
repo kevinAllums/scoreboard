@@ -89,7 +89,7 @@ namespace scoreboard
                 FirstBase.Fill = brush;
                 SecondBase.Fill = brush;
             }
-            else if (base_runner_status == 5)
+            else if (base_runner_status == 5) // correct
             {
                 // 1st/3rd
                 FirstBase.Fill = brush;
@@ -104,13 +104,6 @@ namespace scoreboard
             else if (base_runner_status == 7) // correct
             {
                 // 2nd/3rd
-                FirstBase.Fill = brush;
-                SecondBase.Fill = brush;
-                ThirdBase.Fill = brush;
-            }
-            else if (base_runner_status == 8)
-            {
-                // 1st/2nd/3rd
                 FirstBase.Fill = brush;
                 SecondBase.Fill = brush;
                 ThirdBase.Fill = brush;

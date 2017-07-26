@@ -8,11 +8,11 @@
         Title="Details" Icon="b2.ico" Height="300" Width="300" Background="#FF362B04" SizeToContent="WidthAndHeight" ResizeMode="CanMinimize">
     <StackPanel x:Name="Body" Margin="10">
         <StackPanel x:Name="LinescorePanel" Visibility="Collapsed">
-            <Border x:Name="LineScoreGridBorder" BorderThickness="4" BorderBrush="White">
-                <DataGrid x:Name="LineScoreGrid" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" CanUserAddRows="False" IsReadOnly="True" SelectionUnit="Cell" SelectionMode="Single" RowBackground="#FFBDBDBD">
+            <Border x:Name="LineScoreGridBorder" BorderThickness="4" BorderBrush="#FF043604">
+                <DataGrid x:Name="LineScoreGrid" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False" CanUserDeleteRows="False" CanUserAddRows="False" IsReadOnly="True" SelectionUnit="Cell" SelectionMode="Single" RowBackground="White" Background="White">
                     <DataGrid.Resources>
                         <Style TargetType="{x:Type DataGridColumnHeader}">
-                            <Setter Property="Background" Value="#FF043604" />
+                            <Setter Property="Background" Value="#FFBDBDBD" />
                         </Style>
                     </DataGrid.Resources>
                     <DataGrid.RowHeaderStyle>
