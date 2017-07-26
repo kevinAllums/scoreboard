@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Xml.Linq;
+using System.Windows.Threading;
 
 namespace scoreboard
 {
@@ -18,10 +19,15 @@ namespace scoreboard
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
             InitializeComponent();
 
+            DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(DispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
+            dispatcherTimer.Start();
+
             FillGamesPanel();
         }
 
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
         {
             GamesPanel.Children.Clear();
             Console.WriteLine(DateTime.Now.ToString("h:mm:ss tt"));
